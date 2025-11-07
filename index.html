@@ -5,77 +5,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Homepage</title>
   <style>
-    :root{
-      --ink:#111; --border:#2b2b2b; --accent:#2196f3;
+    :root {
+      --ink: #111;
+      --border: #2b2b2b;
+      --accent: #2196f3;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Sfondo grande Unsplash (rimane com'era) */
-    body{
-      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:18px;
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      background:url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Palm_Springs_Art_Museum_interior_-_2.jpg/640px-Palm_Springs_Art_Museum_interior_-_2.jpg")
-                 center/cover no-repeat fixed;
-      position:relative; overflow-x:hidden; color:var(--ink);
-    }
-    body::before{content:""; position:fixed; inset:0; background:rgba(0,0,0,.3); z-index:0;}
-
-    .frame{
-      position:relative; z-index:1; width:min(1200px,96vw); min-height:70vh;
-      border:3px solid #fff; border-radius:12px;
-      padding:40px clamp(16px,4vw,48px);
-      background:rgba(255,255,255,.12); backdrop-filter:blur(6px);
-    }
-    h1{
-      text-align:center; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.45);
-      font-weight:800; font-size:clamp(28px,4vw,48px); margin-bottom:36px;
-    }
-    .row{
-      display:grid; grid-template-columns:1fr 1fr;
-      column-gap:clamp(40px,18vw,260px); justify-items:center; margin-top:20px;
+    /* Sfondo grande Unsplash */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: url("https://images.unsplash.com/photo-1549893075-71f11af6b79c?auto=format&fit=crop&w=1600&q=80")
+                  center/cover no-repeat fixed;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* CARD con immagine di background adattata */
-    .card{
-      position:relative;
-      width: clamp(280px, 32vw, 460px);   /* << le DIMENSIONI restano fisse */
-      aspect-ratio: 4/5;                   /* mantieni il formato che preferisci */
-      border:2px solid var(--border);
-      border-radius:10px;
-      text-decoration:none; color:var(--ink);
-      display:grid; place-items:center;
-      font-weight:800; font-size:1.35rem;
-      overflow:hidden;                     /* ritaglia l’immagine al bordo */
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      background:transparent;              /* nessun colore fisso sotto */
-    }
-    /* Strato immagine (cover) */
-    .card::before{
-      content:"";
-      position:absolute; inset:0;
-      background: var(--card-bg, none) center/cover no-repeat; /* 👈 cover */
-      z-index:0;
-      transform:scale(1.02);               /* micro-bleed per evitare bordi */
-    }
-    /* Velo bianco per look “cartoncino” e migliore leggibilità */
-    .card::after{
-      content:"";
-      position:absolute; inset:0;
-      background: rgba(255,255,255,0.78);
-      z-index:0;
-    }
-    /* Testo sopra */
-    .card > span{ position:relative; z-index:1; }
-
-    .card:hover{
-      border-color:var(--accent);
-      transform:translateY(-6px);
-      box-shadow:0 10px 24px rgba(0,0,0,.28);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 0;
     }
 
-    @media (max-width: 780px){
-      .row{ grid-template-columns:1fr; row-gap:28px; }
-      .card{ width:min(360px, 82vw); }
+    .frame {
+      position: relative;
+      z-index: 1;
+      width: min(1200px, 96vw);
+      min-height: 70vh;
+      border: 3px solid white;
+      border-radius: 12px;
+      padding: 40px clamp(16px, 4vw, 48px);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+      font-weight: 800;
+      font-size: clamp(28px, 4vw, 48px);
+      margin-bottom: 36px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(40px, 18vw, 260px);
+      justify-items: center;
+      margin-top: 20px;
+    }
+
+    /* CARD con immagine locale di background */
+    .card {
+      position: relative;
+      width: clamp(280px, 32vw, 460px);
+      aspect-ratio: 4/5;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.35rem;
+      overflow: hidden;
+      background: transparent;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--card-bg, none) center/cover no-repeat;
+      z-index: 0;
+      transform: scale(1.02);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.78);
+      z-index: 0;
+    }
+
+    .card > span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    @media (max-width: 780px) {
+      .row {
+        grid-template-columns: 1fr;
+        row-gap: 28px;
+      }
+      .card {
+        width: min(360px, 82vw);
+      }
     }
   </style>
 </head>
@@ -84,14 +126,14 @@
     <h1 id="titolo">Homepage</h1>
 
     <section class="row" aria-label="Navigazione pagine">
-      <!-- Imposta l'immagine di sfondo della card con la CSS variable --card-bg -->
-      <a class="card" href="pagina1.html"
-         style="--card-bg: url('img/pagina1.jpg');">
+      <!-- Inserisci qui il percorso del file immagine -->
+      <a class="card" href="pagina_1.html"
+         style="--card-bg: url('\Immagini\Homepage\Pagina 1 IMG.jpeg');">
         <span>Pagina 1</span>
       </a>
 
-      <a class="card" href="pagina2.html"
-         style="--card-bg: url('img/pagina2.jpg');">
+      <a class="card" href="pagina_2.html"
+         style="--card-bg: url('\Immagini\Homepage\Pagina 2 IMG.jpeg');">
         <span>Pagina 2</span>
       </a>
     </section>
