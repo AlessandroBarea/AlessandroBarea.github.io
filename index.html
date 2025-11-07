@@ -1,142 +1,155 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Homepage</title>
   <style>
-    :root {
-      --ink: #111;
-      --border: #2b2b2b;
-      --accent: #2196f3;
+    :root{
+      --ink:#fff;
+      --glass: rgba(255,255,255,.14);
+      --glass-border: rgba(255,255,255,.55);
+      --card-bg: rgba(255,255,255,.85);
+      --shadow: rgba(0,0,0,.35);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Sfondo grande Unsplash */
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
+    /* ====== SFONDO A TUTTO SCHERMO (usa l'URL già presente) ====== */
+    body{
+      margin:0;
+      min-height:100dvh;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      color: var(--ink);
-      background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Palm_Springs_Art_Museum_interior_-_2.jpg/640px-Palm_Springs_Art_Museum_interior_-_2.jpg")
-                  center/cover no-repeat fixed;
-      position: relative;
-      overflow-x: hidden;
+      color:var(--ink);
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+      background:#000; /* fallback */
+    }
+    /* immagine di sfondo: prende l’URL da body[data-bg] */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image: var(--bg-image, none);
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(.85);
+      transform: scale(1.06);
+      z-index:-2;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 0;
+    /* ====== PANNELLO VETRO ====== */
+    .frame{
+      width:min(1100px, 92vw);
+      min-height: 56vh;
+      padding: 28px 32px 40px;
+      background: var(--glass);
+      border-radius: 14px;
+      border: 2px solid var(--glass-border);
+      box-shadow:
+        0 8px 24px var(--shadow),
+        inset 0 0 0 1px rgba(255,255,255,.14);
+      backdrop-filter: blur(6px) saturate(120%);
     }
 
-    .frame {
-      position: relative;
-      z-index: 1;
-      width: min(1200px, 96vw);
-      min-height: 70vh;
-      border: 3px solid white;
-      border-radius: 12px;
-      padding: 40px clamp(16px, 4vw, 48px);
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(6px);
-    }
-
-    h1 {
+    h1{
+      margin: 0 0 18px;
       text-align: center;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
       font-weight: 800;
-      font-size: clamp(28px, 4vw, 48px);
-      margin-bottom: 36px;
+      font-size: clamp(22px, 3.8vw, 28px);
+      letter-spacing:.3px;
+      color:#fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,.35);
     }
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: clamp(40px, 18vw, 260px);
-      justify-items: center;
-      margin-top: 20px;
+    .cards{
+      margin-top: 8px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(18px, 4vw, 48px);
+      justify-items:center;
     }
 
-    /* CARD con immagine locale di background */
-    .card {
-      position: relative;
-      width: clamp(280px, 32vw, 460px);
-      aspect-ratio: 4/5;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      text-decoration: none;
-      color: var(--ink);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 1.35rem;
-      overflow: hidden;
-      background: transparent;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    .card{
+      width:min(360px, 36vw);
+      aspect-ratio: 3/4;                 /* DIMENSIONI FISSE */
+      border-radius:10px;
+      position:relative;
+      overflow:hidden;
+      text-decoration:none;
+      color:#111;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      background: var(--card-bg);
+      box-shadow:
+        0 10px 22px rgba(0,0,0,.25),
+        inset 0 0 0 1px rgba(0,0,0,.06);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{ transform: translateY(-4px); box-shadow: 0 16px 28px rgba(0,0,0,.34); }
+
+    /* layer immagine DIETRO: riempie il riquadro ma NON ne cambia la dimensione */
+    .card::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: var(--card-image, none);
+      background-size: cover;             /* adatta all'area */
+      background-position: center;
+      filter: brightness(.95);
+      z-index:0;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: var(--card-bg, none) center/cover no-repeat;
-      z-index: 0;
-      transform: scale(1.02);
+    /* velo chiaro per ricordare il look del mockup */
+    .card::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(to bottom, rgba(255,255,255,.72), rgba(255,255,255,.86));
+      z-index:1;
     }
 
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.78);
-      z-index: 0;
+    .card__label{
+      position:relative; z-index:2;
+      font-size: clamp(14px, 1.8vw, 16px);
+      color:#000;
     }
 
-    .card > span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .card:hover {
-      border-color: var(--accent);
-      transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
-    }
-
-    @media (max-width: 780px) {
-      .row {
-        grid-template-columns: 1fr;
-        row-gap: 28px;
-      }
-      .card {
-        width: min(360px, 82vw);
-      }
+    @media (max-width: 640px){
+      .cards{ grid-template-columns: 1fr; }
+      .frame{ padding:22px 16px 28px; }
     }
   </style>
 </head>
-<body>
+<body
+  <!-- Mantieni il TUO URL di sfondo già presente qui sotto, non cambiarlo -->
+  data-bg="URL_DELLA_TUA_IMMAGINE_DI_SFONDO"
+>
   <main class="frame" role="main" aria-labelledby="titolo">
     <h1 id="titolo">Homepage</h1>
 
-    <section class="row" aria-label="Navigazione pagine">
-      <!-- Inserisci qui il percorso del file immagine -->
-      <a class="card" href="pagina_1.html"
-         style="--card-bg: url('Immagini\Homepage\Pagina 1 IMG.jpeg');">
-        <span>Pagina 1</span>
+    <section class="cards" aria-label="Seleziona una pagina">
+      <!-- Mantieni gli URL già presenti nei data-bg -->
+      <a class="card" href="pagina_1.html" data-bg="URL_IMMAGINE_PAGINA_1">
+        <span class="card__label">Pagina 1</span>
       </a>
 
-      <a class="card" href="pagina_2.html"
-         style="--card-bg: url('Immagini\Homepage\Pagina 2 IMG.jpeg');">
-        <span>Pagina 2</span>
+      <a class="card" href="pagina_2.html" data-bg="URL_IMMAGINE_PAGINA_2">
+        <span class="card__label">Pagina 2</span>
       </a>
     </section>
   </main>
+
+  <script>
+    /* Lega automaticamente gli URL già presenti negli attributi data-bg al CSS */
+    (function(){
+      const b = document.body.getAttribute('data-bg');
+      if (b) document.body.style.setProperty('--bg-image', `url("${b}")`);
+
+      document.querySelectorAll('.card').forEach(el=>{
+        const u = el.getAttribute('data-bg');
+        if (u) el.style.setProperty('--card-image', `url("${u}")`);
+      });
+    })();
+  </script>
 </body>
 </html>
