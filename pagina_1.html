@@ -117,17 +117,17 @@
 
       <article class="item">
         <img src="\Immagini\Pagina1\Dama in Blu.jpeg" alt="Immagine 1">
-        <h2>Titolo 1</h2>
+        <h2>Dama in Blu</h2>
       </article>
 
       <article class="item">
         <img src="\Immagini\Pagina1\Corrida.jpeg" alt="Immagine 2">
-        <h2>Titolo 2</h2>
+        <h2>Corrida</h2>
       </article>
 
       <article class="item">
         <img src="\Immagini\Pagina1\Illusioni.jpeg" alt="Immagine 3">
-        <h2>Titolo 3</h2>
+        <h2>Illusioni</h2>
       </article>
 
     </section>
@@ -136,11 +136,11 @@
   <script>
 document.querySelectorAll(".item img").forEach(img => {
   img.addEventListener("click", () => {
-    // Clona l'immagine cliccata
+    
     const clone = img.cloneNode();
     document.body.appendChild(clone);
 
-    // Calcola la posizione iniziale
+    
     const rect = img.getBoundingClientRect();
     clone.style.position = "fixed";
     clone.style.left = rect.left + "px";
@@ -151,28 +151,28 @@ document.querySelectorAll(".item img").forEach(img => {
     clone.style.transition = "all 0.8s ease";
     clone.style.zIndex = "9999";
     clone.style.cursor = "pointer";
-    clone.style.objectFit = "contain"; // mantiene proporzioni
+    clone.style.objectFit = "contain"; 
 
-    // Forza il repaint
+    
     void clone.offsetWidth;
 
-    // Dimensioni limitate: 90% dello schermo
+    
     const maxW = window.innerWidth * 0.9;
     const maxH = window.innerHeight * 0.9;
 
-    // Calcola scala mantenendo proporzioni
+    
     const scaleW = maxW / rect.width;
     const scaleH = maxH / rect.height;
     const scale = Math.min(scaleW, scaleH);
 
-    // Effetto zoom al centro
+    
     clone.style.left = "50%";
     clone.style.top = "50%";
     clone.style.transform = `translate(-50%, -50%) scale(${scale})`;
     clone.style.borderRadius = "10px";
     clone.style.boxShadow = "0 0 40px rgba(0,0,0,0.6)";
 
-    // Dopo 2 secondi torna indietro
+    
     setTimeout(() => {
       clone.style.transform = "translate(0, 0) scale(1)";
       clone.style.left = rect.left + "px";
